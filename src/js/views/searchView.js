@@ -15,16 +15,35 @@ export const clearResults = () => {
     elements.searchResList.innerHTML = '';
 };
 
+//'Pasta with tomato and spinach'
+const limitRecipeTitle = (title, limit = 17) => {
+    const newTitle = [];
+    if(title.length > limit) {
+        //The split function splits a string, separating them by a character, while the reduce one acts as an iterator that takes into account the actual length and the last length
+        title.split(' ').reduce((acc,cur)=>{
+            if(acc + cur.length <= limit){
+                newTitle.push(cur);
+            }
+            return acc + cur.length;
+        },0);
+
+        //return the result
+        //The join function in an array joins the elements of an array separating them by the specified character
+        return `${newTitle.join(' ')} ...`;
+    }
+    return title;
+};
+
 const renderRecipe = recipe => {
     //This is the separate function that renders the recipe. 
     const markup = `
                     <li>
                     <a class="results__link" href="#${recipe.recipe_id}">
                         <figure class="results__fig">
-                            <img src="${recipe.image_url}" alt="${recipe.title}">
+                            <img src="${recipe.image_url}" alt="${limitRecipeTitle(recipe.title)}">
                         </figure>
                         <div class="results__data">
-                            <h4 class="results__name">${recipe.title}</h4>
+                            <h4 class="results__name">${limitRecipeTitle(recipe.title)}</h4>
                             <p class="results__author">${recipe.publisher}</p>
                         </div>
                     </a>
