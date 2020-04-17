@@ -1,7 +1,7 @@
 //import x from './models/Search';
 import Search from './models/Search';
 import * as searchView from './views/searchView';
-import {elements} from './views/base';
+import {elements, renderLoader,clearLoader} from './views/base';
 
 // //import { add as a,mult as mi,ID } from './views/searchView';
 
@@ -32,9 +32,11 @@ const controlSearch = async () =>{
         //3.Prepare UI for the results
         searchView.clearInput();
         searchView.clearResults();
+        renderLoader(elements.searchRes);
         //Here we use await to pertorm the waiting time for the result of the promise in the async function
         await state.search.getResults();
         //4.search for recipes
+        clearLoader();
         console.log(state.search.result);
         searchView.renderResults(state.search.result);
     }
