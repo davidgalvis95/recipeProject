@@ -2,6 +2,7 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
 import {elements, renderLoader,clearLoader} from './views/base';
+import Recipe from './models/Recipe';
 
 // //import { add as a,mult as mi,ID } from './views/searchView';
 
@@ -68,3 +69,11 @@ elements.searchResPages.addEventListener('click', e=> {
         console.log(goToPage);
     }   
 });
+
+//RECIPE CONTROLLER
+
+// const r = new Recipe(47746);
+// r.getRecipe();
+// console.log(r);
+
+//window.addEventListener()
