@@ -17,7 +17,7 @@ export const clearResults = () => {
     //Here we clear out the buttons, so that we can reinsert them from the controller
     elements.searchResPages.innerHTML= '';
 };
-
+//-------------------------------------------------------------------------------------------------------------
 //'Pasta with tomato and spinach'
 const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
@@ -55,7 +55,7 @@ const renderRecipe = recipe => {
     //Inserting this html element ensures that we can get our recipe html linked with the original UI view, the before end injection is the best in this case
     elements.searchResList.insertAdjacentHTML('beforeend',markup);
 };
-
+//-------------------------------------------------------------------------------------------------------------
 const createButton = (page,type) =>`
                 <button class="btn-inline results__btn--${type}" data-goto="${type === 'prev' ? page - 1 : page + 1}">
                     <svg class="search__icon">
@@ -83,7 +83,7 @@ const renderButtons = (page, numResults,resPerPage) =>{
     }
     elements.searchResPages.insertAdjacentHTML('afterbegin',button);
 };
-
+//-------------------------------------------------------------------------------------------------------------
 export const renderResults = (recipes, page=1, resPerPage = 10) =>{
     //Here we print the whole array that brings the recipes for some of the queries in the controller, in the UI. To do so, we call another function that renders each of the recipes. We don't nwwd to call a arrow function inside te foreach due that we have already done it in the
 

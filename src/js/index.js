@@ -21,11 +21,12 @@ This is the global state of the app in terms of
 */
 
 const state = {};
-
+//------------------------------------------------------------------------------------------------------------
 //This is an async function because in the model of search it is an async function
 const controlSearch = async () =>{
     //1. Get the query from the view
     const query = searchView.getInput();//TO DO
+    //const query = 'pizza';
 
     if(query){
         //2. We create a new serach object and we add this to the state
@@ -38,9 +39,12 @@ const controlSearch = async () =>{
             //Here we use await to pertorm the waiting time for the result of the promise in the async function
             await state.search.getResults();
             //4.search for recipes
+            //console.log(state.recipe.ingredients);
+            
             clearLoader();
             console.log(state.search.result);
-            searchView.renderResults(state.search.result);           
+            searchView.renderResults(state.search.result);    
+            //console.log(state.recipe.ingredients);       
         }catch(error){
 
             console.log(error);
@@ -56,12 +60,19 @@ elements.searchForm.addEventListener('submit', e => {
     //Whenever we make the search button we have the e.preventDefault funtcion applied to avoid the page to be reaload in every search, then we call the separate function controlSearch that searches for the query thrown by the UI
     e.preventDefault();
     controlSearch();
-})
+});
+//-------------------------------------------------------------------------------------------------------------
+//This is for testing
+/*
+window.addEventListener('load', e => {
+    e.preventDefault();
+    controlSearch();
+});*/
 
 // const search = new Search('pizza');
 // console.log(search);
 // search.getResults();
-
+//-------------------------------------------------------------------------------------------------------------
 //In the controller we should have all our event listeners and we can control what should happen from there
 
 elements.searchResPages.addEventListener('click', e=> {
@@ -77,7 +88,7 @@ elements.searchResPages.addEventListener('click', e=> {
         console.log(goToPage);
     }   
 });
-
+//-------------------------------------------------------------------------------------------------------------
 //RECIPE CONTROLLER
 
 //Testing the model of recipe
@@ -85,7 +96,7 @@ elements.searchResPages.addEventListener('click', e=> {
 // r.getRecipe();
 // console.log(r);
 
-
+//This is the function that takes the id of the hash that is executed every time the page loads or every time the page changes its hash(It means when we select another item from the list of recipes)
 const controlRecipe = async() => {
     //Get the id from the url
     const id = window.location.hash.replace('#','');
@@ -96,12 +107,16 @@ const controlRecipe = async() => {
 
         //Create new Recipe Object
         state.recipe = new Recipe(id);
+        //Testing
+        //window.r = state.recipe;
         //Get the recipe Data
         try{
             await state.recipe.getRecipe();
             //Calculate servings time
+
             state.recipe.calcTime();
             state.recipe.calcServings();
+            state.recipe.parseIngredients();
 
             //Render Recipe
             console.log(state.recipe);
