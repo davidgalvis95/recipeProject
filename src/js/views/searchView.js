@@ -17,6 +17,26 @@ export const clearResults = () => {
     //Here we clear out the buttons, so that we can reinsert them from the controller
     elements.searchResPages.innerHTML= '';
 };
+
+export const highlightSelected = id =>{
+    //Here we create a method with all the active elements in the list of the recipes pane, and we select all those classes and store them in the resultsArr array.
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'))
+    resultsArr.forEach(el => {
+        //With all those elements in the resultsArr array, we delete the results__link--active class of css that makes them to view like active
+        el.classList.remove('results__link--active')
+    });
+    //After we've removed all those css classes in the active elements of the array, we select the argument of the element we point (which point to the id), this is why we use the id, to add te css class to that specific element in the html list, to add a classList, we do not use the '.' as when pointing classes with querySelector
+    //console.log('id'+id);
+    try{
+            const x = document.querySelector(`.results__link[href*="${id}"]`);
+            //const x = document.querySelector(".results__link").setAttribute("href", `${id}`);
+            console.log("argument " + x);
+            x.classList.add("results__link--active");
+    }catch(error){
+        console.log(error);
+    };
+
+}
 //-------------------------------------------------------------------------------------------------------------
 //'Pasta with tomato and spinach'
 const limitRecipeTitle = (title, limit = 17) => {
