@@ -34,6 +34,8 @@ export default class Recipe{
     parseIngredients() {
         const unitsLong = ['tablespoons','tablespoon','ounces','ounce','teaspoons','teaspoon','cups','pounds'];
         const unitsShort = ['tbsp','tbsp','oz','oz','tsp','tsp','cup','pound'];
+        //With the next ... we descructure the array and join it with the other 2 components of units we want to add there
+        const units = [...unitsShort,'kg','g'];
         const newIngredients = this.ingredients.map(el => {
             //1 Uniform units
             let ingredient = el.toLowerCase();
@@ -47,7 +49,7 @@ export default class Recipe{
             const arrIng = ingredient.split(' ');
             //console.log(arrIng);
             //In this arrow function, we loop over the arrIng and look if one of the elements match with the unitsShort one, if so, then we get the index of it
-            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
+            const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
             //console.log(unitIndex);
 
             let objIng;
