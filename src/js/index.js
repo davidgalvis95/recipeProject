@@ -4,6 +4,7 @@ import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import {elements, renderLoader,clearLoader, elementStrings} from './views/base';
 import Recipe from './models/Recipe';
+import List from './models/List';
 
 // //import { add as a,mult as mi,ID } from './views/searchView';
 
@@ -159,3 +160,5 @@ elements.recipe.addEventListener('click',e =>{
     console.log(state.recipe);
 
 })
+
+window.l = new List();
