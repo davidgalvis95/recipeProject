@@ -2,6 +2,7 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 import {elements, renderLoader,clearLoader, elementStrings} from './views/base';
 import Recipe from './models/Recipe';
 import List from './models/List';
@@ -141,11 +142,11 @@ const controlRecipe = async() => {
 // window.addEventListener('load', controlRecipe);
 
 ['hashchange','load'].forEach(event => window.addEventListener(event,controlRecipe));
-
+//-------------------------------------------------------------------------------------------------------------
 //Handling recipe button increase and decrease  clicks
 
 elements.recipe.addEventListener('click',e =>{
-
+//Here in the matches side what we are going to look for is to know whether the clicks done under the recipe object previously defined, match one of the classes and minor classes, so we are not going to use closest because we are not searching for the union of decrease and increase and the parent object, but we will see those objects separately
     if(e.target.matches('.btn-decrease, .btn-decrease *')){
         //Decrease button is clicked
         if(state.recipe.servings > 1){
@@ -156,9 +157,48 @@ elements.recipe.addEventListener('click',e =>{
         //Decrease button is clicked
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
+    } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
+        controlList();
     }
     console.log(state.recipe);
 
 })
+//-------------------------------------------------------------------------------------------------------------
+//window.l = new List();
 
-window.l = new List();
+/*
+LIST CONTROLLER 
+*/
+
+const controlList = () => {
+    //Create a new list
+    if(!state.list) state.list = new List();
+
+    //add each ingredient to the list and add it to the UI
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.addItem(el.count,el.unit,el.ingredient);
+        listView.renderItem(item);
+    })
+}
+
+//Handle delete and update event list 
+
+elements.shopping.addEventListener('click', e =>{
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+    console.log(id);
+    //Handle the delete button
+    if (e.target.matches('.shopping__delete, .shopping__delete *')){
+
+        //Delete from state
+        state.list.deleteItem(id);
+
+        //Delete from UI
+        listView.deleteItem(id);
+        //Handle the count update
+    }else if (e.target.matches('.shopping__count-value')){
+        const val = parseFloat(e.target.value, 10);
+        console.log(id + ' ' +val);
+        state.list.updateCount(id,val);
+    }
+
+})

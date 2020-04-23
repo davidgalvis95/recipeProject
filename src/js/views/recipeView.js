@@ -95,8 +95,9 @@ export const renderRecipe = recipe => {
                 ${ recipe.ingredients.map(el => createIngredient(el)).join('') }
 
                 </ul>
-                    
-                <button class="btn-small recipe__btn">
+                <!-- this is the button that adds the ingredients to the shopping list -->
+
+                <button class="btn-small recipe__btn recipe__btn--add">
                     <svg class="search__icon">
                         <use href="img/icons.svg#icon-shopping-cart"></use>
                     </svg>
@@ -129,11 +130,10 @@ export const updateServingsIngredients = recipe =>{
     document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
     //update ingredients
     const countElements = Array.from(document.querySelectorAll('.recipe__count'));
-    countElements.forEach(el => console.log('text ' + el.textContent));
-    recipe.ingredients.forEach(i => console.log('ing ' + i.count));
+    //countElements.forEach(el => console.log('text ' + el.textContent));
+    //recipe.ingredients.forEach(i => console.log('ing ' + i.count));
     countElements.forEach((el,i) => {
         //console.log(recipe.ingredient[i]);
-        
         el.textContent =formatCount(recipe.ingredients[i].count);
     });
 }
