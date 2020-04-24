@@ -39,7 +39,7 @@ export const highlightSelected = id =>{
 }
 //-------------------------------------------------------------------------------------------------------------
 //'Pasta with tomato and spinach'
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
     if(title.length > limit) {
         //The split function splits a string, separating them by a character, while the reduce one acts as an iterator that takes into account the actual length and the last length

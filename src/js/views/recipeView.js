@@ -10,18 +10,19 @@ const formatCount = count =>{
     if(count){
         //count = 2.5 ---> 5/2 ---> 2 1/2
         //count = 0.5 ---> 1/2
-        
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el,10));
-        console.log(count);
-        if(!dec) return count;
+        //This is done because for some reason the Math.round only returns integers
+        const roundCount = Math.round(count * 10000) / 10000;
+        const [int, dec] = roundCount.toString().split('.').map(el => parseInt(el,10));
+        console.log(roundCount);
+        if(!dec) return roundCount;
 
         if(int === 0) {
             //The convertion to fraction was done by using the Fractional library from npm, however there are other methods to perform the same using raw JS
-            const fr = new Fraction(count);
+            const fr = new Fraction(roundCount);
             console.log(fr);
             return `${fr.numerator}/${fr.denominator}`;
         }else{
-            const fr = new Fraction(count-int);
+            const fr = new Fraction(roundCount-int);
             return `${int} ${fr.numerator}/${fr.denominator}`;           
         }
 
@@ -43,7 +44,7 @@ const createIngredient = (ingredient) => `
                     </li>
 `;
 //-------------------------------------------------------------------------------------------------------------
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe,isLiked) => {
     const markup = `
             <figure class="recipe__fig">
                 <img src="${recipe.img}" alt="${recipe.title}" class="recipe__img">
@@ -82,7 +83,7 @@ export const renderRecipe = recipe => {
                 </div>
                 <button class="recipe__love">
                     <svg class="header__likes">
-                        <use href="img/icons.svg#icon-heart-outlined"></use>
+                        <use href="img/icons.svg#icon-heart${isLiked?'':'outlined'}"></use>
                     </svg>
                 </button>
             </div>
@@ -109,7 +110,7 @@ export const renderRecipe = recipe => {
                 <h2 class="heading-2">How to cook it</h2>
                 <p class="recipe__directions-text">
                     This recipe was carefully designed and tested by
-                    <span class="recipe__by">${recipe.author}</span>. Please check out directions at their website.
+                    <span class="recipe__by">${recipe.publisher}</span>. Please check out directions at their website.
                 </p>
                 <a class="btn-small recipe__btn" href="${recipe.url}" target="_blank">
                     <span>Directions</span>
